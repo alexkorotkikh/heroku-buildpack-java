@@ -65,6 +65,17 @@ fi
 curl --silent --max-time 10 --location $MAVEN_SETTINGS_URL --output .m2/settings.xml
 echo " done"
 
+ZINC_URL="http://downloads.typesafe.com/zinc/0.3.0/zinc-0.3.0.tgz"
+
+if [ ! -d zinc-0.3.0 ]; then
+  echo -n "-----> Installing Zinc incremental compilation server..."
+  curl --silent --max-time 60 --location $ZINC_URL | tar xz
+  echo " done"
+fi
+echo -n "------> Starting Zinc server..."
+zinc-0.3.0/bin/zinc -start
+echo " done"
+
 # change to build dir to run maven
 cd $BUILD_DIR
 
